@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: travel-expense-backend
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    preDeployCommand: npm run migrate --if-present
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000

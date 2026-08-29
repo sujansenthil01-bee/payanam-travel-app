@@ -1,0 +1,9 @@
+{
+  "name": "TravelExpenseApp",
+  "displayName": "Travel Expense Tracker",
+  "version": "1.0.0",
+  "description": "Track expenses on group trips with AI assistance",
+  "author": "Your Name",
+  "main": "index.js",
+  "type": "module"
+}

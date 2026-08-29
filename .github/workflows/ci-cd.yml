@@ -1,0 +1,76 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  backend-test:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [18.x]
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+    
+    - name: Install dependencies
+      run: |
+        cd backend
+        npm install
+    
+    - name: Run linter
+      run: |
+        cd backend
+        npm run lint --if-present
+    
+    - name: Run tests
+      run: |
+        cd backend
+        npm test --if-present
+    
+    - name: Check environment
+      run: |
+        cd backend
+        test -f .env.example && echo "✅ .env.example exists"
+
+  mobile-build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+    
+    - name: Install dependencies
+      run: |
+        cd mobile
+        npm install
+    
+    - name: Check TypeScript
+      run: |
+        cd mobile
+        npx tsc --noEmit --skipLibCheck
+
+  notify-deployment:
+    needs: [backend-test, mobile-build]
+    runs-on: ubuntu-latest
+    
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: Success Notification
+      run: |
+        echo "✅ All tests passed!"
+        echo "🚀 Ready for deployment"
