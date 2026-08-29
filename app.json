@@ -1,0 +1,21 @@
+{
+  "expo": {
+    "name": "Payanam",
+    "slug": "payanam",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "scheme": "payanam",
+    "backgroundColor": "#000000",
+    "splash": {
+      "backgroundColor": "#000000"
+    },
+    "ios": { "supportsTablet": false, "bundleIdentifier": "com.payanam.app" },
+    "android": {
+      "package": "com.payanam.app",
+      "config": { "googleMaps": { "apiKey": "" } }
+    },
+    "plugins": ["expo-image-picker"],
+    "extra": { "googleExpoClientId": "" }
+  }
+}
